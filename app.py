@@ -14,10 +14,12 @@ def read_queue_messages(queue_name: str):
     myobj = '{"count":100,"requeue":"true","encoding":"auto","truncate":50000}'
 
     x = requests.post(url, data = myobj, auth = ('pms02', 'asdf12#$'))
-    d = json.loads(x.text)
-    messages = []
-    for item in d:
-        #print(item['payload'])
-        messages.append(item['payload'])
-
-    return {"response_status": x.status_code, "messages": messages}
+    if x.status_code == 200:
+        d = json.loads(x.text)
+        messages = []
+        for item in d:
+            #print(item['payload'])
+            messages.append(item['payload'])
+        return {"response_status": x.status_code, "messages": messages}
+    else:
+        return {"response_status": x.status_code}

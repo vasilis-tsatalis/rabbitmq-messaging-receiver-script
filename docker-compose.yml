@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "uvicorn app:app --host 0.0.0.0 --port 5000 --reload"
+    ports:
+      - "5000:5000"
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.http.config:/etc/nginx/nginx.conf
+      - ./nginx/certs:/etc/nginx/certs
+    ports:
+      - "8080:80"
+    depends_on:
+      - web

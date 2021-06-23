@@ -6,3 +6,7 @@ $ uvicorn app:app --reload
 
 # Docker
 $ docker build --tag python-messaging .
+
+# Run the project locally
+
+$ docker-compose up --build
